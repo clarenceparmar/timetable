@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timetable</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background-color: #444;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #timetable-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #666;
+      color: #444;
+    }
+
+    .heading {
+      
+      text-align: center;
+      background-color: #888;
+      color: #fff;
+      font-size: 32px;
+      padding: 15px;
+      margin-bottom: 2%;
+
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+      margin: 5px;
+      padding: 10px;
+    }
+
+    td {
+      color: #fff;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td.empty {
+      background-color: #fff;
+    }
+
+    .subject{
+
+      background-color:  #00ff22;
+      font-size: medium;
+      color: black;
+      font-weight: bolder;
+
+    }
+
+  </style>
+
+</head>
+  <body>
+
+    <div class="heading">NVPAS-FY-BCA ( G Division )</div>
+
+    <div id="timetable-container">
+
+      <div class="heading">Timetable</div>
+
+      <table>
+
+        <!-- Heading -->
+        <tr>
+          <th>Time</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th >Sunday</th> 
+        </tr>
+
+        
+        <tr>
+          <td>09:20 - 10:10</td>
+          <td>Web Tech</td>
+          <td>CO</td>
+          <td>CO</td>
+          <td>Web Tech</td>
+          <td>C</td>
+          <td>To be Updated</td>
+          <td>HOLIDAY</td>
+        </tr>
+
+        
+        <tr>
+          <td>10:10 - 11:00</td>
+          <td>Co</td>
+          <td>Web Tech</td>
+          <td>Maths</td>
+          <td>Maths</td>
+          <td>Maths</td>
+          <td>To be Updated</td>
+          <td>HOLIDAY</td>
+        </tr>
+
+        <tr>
+          <td>11:00 - 11:50</td>
+          <td>C</td>
+          <td>Day End</td>
+          <td>C</td>
+          <td>Day End</td>
+          <td>Day End</td>
+          <td>To be Updated</td>
+          <td>HOLIDAY</td>
+        </tr>
+        
+        <tr> 
+          <td>11:50 - 01:25 </td>
+          <th id="break" colspan="6" >BREAK</th>
+          <td>HOLIDAY</td>
+        </tr>
+
+        <tr>
+          <td>01:30 - 04:00</td>
+          <td>C lab</td>
+          <td>Day End</td>
+          <td>Web Tech Lab</td>
+          <td>English Lab</td>
+          <td>Day End</td>
+          <td>Office Lab</td>
+          <td>HOLIDAY</td>
+        </tr>
+
+      </table>
+    </div>
+
+    <script src="./time.js"></script>
+
+  </body>
+</html>
