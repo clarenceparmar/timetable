@@ -57,6 +57,22 @@
       font-weight: bold;
     }
 
+    #mobile-toggle {
+      display: none;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #mobile-toggle button {
+      padding: 8px 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
     @media (max-width: 768px) {
       table, thead, tbody, th, td, tr {
         display: block;
@@ -101,6 +117,10 @@
 <body>
 
 <h2>📚 NVPAS - BCA Semester 5 Timetable</h2>
+
+<div id="mobile-toggle">
+  <button onclick="toggleView()">Show Full Timetable</button>
+</div>
 
 <table id="timetable">
   <thead>
@@ -201,6 +221,47 @@ setInterval(() => {
   document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
   highlightCurrentSlot();
 }, 60000);
+
+// --- Mobile View Toggle ---
+function toggleView() {
+  const table = document.getElementById("timetable");
+  table.classList.toggle("show-all");
+  const btn = document.querySelector("#mobile-toggle button");
+  if (table.classList.contains("show-all")) {
+    btn.textContent = "Show Today's Timetable";
+    showAllColumns(true);
+  } else {
+    btn.textContent = "Show Full Timetable";
+    showAllColumns(false);
+  }
+}
+
+function showAllColumns(showAll) {
+  const now = new Date();
+  const dayIndex = now.getDay(); // Sunday = 0
+
+  const ths = document.querySelectorAll("#timetable thead th");
+  ths.forEach((th, index) => {
+    if (index === 0) return;
+    th.style.display = showAll || index === dayIndex ? "" : "none";
+  });
+
+  const trs = document.querySelectorAll("#timetable tbody tr");
+  trs.forEach(row => {
+    const tds = row.querySelectorAll("td");
+    tds.forEach((td, index) => {
+      if (index === 0) return;
+      td.style.display = showAll || index === dayIndex ? "" : "none";
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.innerWidth <= 768) {
+    document.getElementById("mobile-toggle").style.display = "block";
+    showAllColumns(false);
+  }
+});
 </script>
 
 </body>
