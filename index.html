@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>College Timetable - BCA Sem 5</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fdfdfd;
+      margin: 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .highlight {
+      background-color: #ffeeba !important;
+      font-weight: bold;
+    }
+
+    .holiday {
+      background-color: #f8d7da;
+      color: #721c24;
+      font-weight: bold;
+    }
+
+    .lunch {
+      background-color: #d4edda;
+      color: #155724;
+      font-weight: bold;
+    }
+
+    .lab {
+      background-color: #e2e3f3;
+      color: #2e2e6e;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+
+      td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      td[colspan="6"]::before {
+        content: "Time Slot";
+      }
+
+      td[rowspan] {
+        border: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>📚 NVPAS - BCA Semester 5 Timetable</h2>
+
+<table id="timetable">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-start="9:05" data-end="9:55">
+      <td data-label="Time">9:05 - 9:55</td>
+      <td data-label="Monday">ASP.NET</td>
+      <td data-label="Tuesday">ASP.NET</td>
+      <td data-label="Wednesday">SE</td>
+      <td data-label="Thursday">ASP.NET</td>
+      <td data-label="Friday">AI</td>
+      <td data-label="Saturday" class="holiday" rowspan="4">Holiday</td>
+    </tr>
+    <tr data-start="10:00" data-end="10:50">
+      <td data-label="Time">10:00 - 10:50</td>
+      <td data-label="Monday">US</td>
+      <td data-label="Tuesday">JAVA</td>
+      <td data-label="Wednesday">JAVA</td>
+      <td data-label="Thursday">US</td>
+      <td data-label="Friday">CN</td>
+    </tr>
+    <tr data-start="10:55" data-end="11:45">
+      <td data-label="Time">10:55 - 11:45</td>
+      <td data-label="Monday">HP</td>
+      <td data-label="Tuesday">AI</td>
+      <td data-label="Wednesday">AI</td>
+      <td data-label="Thursday">SE</td>
+      <td data-label="Friday">ASP.NET</td>
+    </tr>
+    <tr data-start="11:50" data-end="12:40">
+      <td data-label="Time">11:50 - 12:40</td>
+      <td data-label="Monday"></td>
+      <td data-label="Tuesday">CN</td>
+      <td data-label="Wednesday"></td>
+      <td data-label="Thursday"></td>
+      <td data-label="Friday"></td>
+    </tr>
+    <tr class="lunch" data-start="12:40" data-end="1:25">
+      <td data-label="Time">12:40 - 1:25</td>
+      <td colspan="6">🍱 LUNCH BREAK</td>
+    </tr>
+    <tr class="lab" data-start="1:25" data-end="4:00">
+      <td data-label="Time" rowspan="4">1:25 - 4:00</td>
+      <td data-label="Monday" class="lab" rowspan="4">Project Lab</td>
+      <td data-label="Tuesday" class="lab" rowspan="4">No Lab</td>
+      <td data-label="Wednesday" class="lab" rowspan="4">No Lab</td>
+      <td data-label="Thursday" class="lab" rowspan="4">JAVA Lab</td>
+      <td data-label="Friday" class="lab" rowspan="4">ASP.NET Lab</td>
+      <td data-label="Saturday" class="holiday" rowspan="4">Holiday</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+function timeToMinutes(t) {
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function highlightCurrentSlot() {
+  const now = new Date();
+  const currentDay = now.getDay(); // Sunday = 0
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  
+  const dayIndex = currentDay >= 1 && currentDay <= 6 ? currentDay : -1;
+  if (dayIndex === -1) return;
+
+  const rows = document.querySelectorAll("#timetable tbody tr");
+  rows.forEach(row => {
+    const start = row.getAttribute("data-start");
+    const end = row.getAttribute("data-end");
+    if (!start || !end) return;
+
+    const startMin = timeToMinutes(start);
+    const endMin = timeToMinutes(end);
+
+    if (currentMinutes >= startMin && currentMinutes < endMin) {
+      const cells = row.querySelectorAll("td");
+      if (cells[dayIndex]) {
+        cells[dayIndex].classList.add("highlight");
+      }
+    }
+  });
+}
+
+highlightCurrentSlot();
+setInterval(() => {
+  document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+  highlightCurrentSlot();
+}, 60000);
+</script>
+
+</body>
+</html>
